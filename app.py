@@ -100,6 +100,23 @@ st.markdown("""
         border-color: #f59e0b;
         transform: translateY(-2px);
     }
+    .poster-img {
+        width: 110px;
+        height: 165px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        flex-shrink: 0;
+        background: #1e293b;
+    }
+    .card-content {
+        flex: 1;
+        min-width: 0;
+        margin-left: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
     .cinescore-pill {
         background: linear-gradient(135deg, #f59e0b, #d97706);
         color: #ffffff;
