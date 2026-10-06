@@ -385,7 +385,7 @@ def render_media_card(item: dict, rank: int):
         top_ep_info = f"<div style='font-size:0.85rem; color:#facc15; margin-top:0.4rem;'>👑 <b>Highest Rated Episode:</b> {item['top_episode']}</div>"
 
     fallback_img = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80"
-    img_tag = f'<img src="{poster_url}" class="poster-img" alt="{title}" onerror="this.onerror=null;this.src=\'{fallback_img}\';"/>'
+    img_tag = f'<img src="{poster_url}" class="poster-img" alt="{title}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'{fallback_img}\';"/>'
 
     card_html = (
         f'<div class="movie-card" style="display:flex; flex-direction:row; align-items:stretch;">'
