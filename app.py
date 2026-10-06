@@ -346,6 +346,7 @@ def render_media_card(item: dict, rank: int):
     plot = item.get("plot") or item.get("synopsis") or "No plot synopsis available."
     director = item.get("director") or item.get("studio") or ", ".join(item.get("creators", [])) or "Various Creators"
     m_type = item.get("media_type", "movie")
+    poster_url = get_media_poster(item)
 
     # Category Badge
     badge_class = "badge-movie"
@@ -383,9 +384,15 @@ def render_media_card(item: dict, rank: int):
     if "top_episode" in item:
         top_ep_info = f"<div style='font-size:0.85rem; color:#facc15; margin-top:0.4rem;'>👑 <b>Highest Rated Episode:</b> {item['top_episode']}</div>"
 
+    fallback_img = "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80"
+    img_tag = f'<img src="{poster_url}" class="poster-img" alt="{title}" onerror="this.onerror=null;this.src=\'{fallback_img}\';"/>'
+
     card_html = (
-        f'<div class="movie-card">'
-        f'<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">'
+        f'<div class="movie-card" style="display:flex; flex-direction:row; align-items:stretch;">'
+        f'{img_tag}'
+        f'<div class="card-content">'
+        f'<div>'
+        f'<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem; flex-wrap:wrap; gap:8px;">'
         f'<div>'
         f'<span style="color:#94a3b8; font-weight:700; font-size:1.05rem; margin-right:8px;">#{rank}</span>'
         f'<span class="category-badge {badge_class}">{badge_text}</span>'
@@ -394,12 +401,14 @@ def render_media_card(item: dict, rank: int):
         f'</div>'
         f'<div><span class="cinescore-pill">CineScore: {cinescore}</span></div>'
         f'</div>'
-        f'<div style="margin-bottom:0.6rem;">{badges_html}</div>'
-        f'<p style="font-size:0.9rem; color:#cbd5e1; margin:0.4rem 0;">{plot}</p>'
+        f'<div style="margin-bottom:0.5rem;">{badges_html}</div>'
+        f'<p style="font-size:0.9rem; color:#cbd5e1; margin:0.3rem 0; line-height:1.4;">{plot}</p>'
         f'{top_ep_info}'
-        f'<div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; color:#94a3b8; margin-top:0.5rem; border-top:1px solid rgba(148,163,184,0.15); padding-top:0.5rem;">'
+        f'</div>'
+        f'<div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; color:#94a3b8; margin-top:0.6rem; border-top:1px solid rgba(148,163,184,0.15); padding-top:0.5rem; flex-wrap:wrap; gap:8px;">'
         f'<div><b>Director / Studio / Creators:</b> {director}</div>'
         f'<div>{stream_tags}</div>'
+        f'</div>'
         f'</div>'
         f'</div>'
     )
