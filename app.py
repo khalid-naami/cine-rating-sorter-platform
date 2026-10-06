@@ -400,87 +400,121 @@ with tabs[0]:
 # ----------------- TAB 2: Top 100 Movies -----------------
 with tabs[1]:
     st.markdown("### 🎬 All-Time Top 100 Greatest Cinema Masterpieces")
-    df_movies = pd.DataFrame(MASTER_MOVIES_DB)
-    st.dataframe(df_movies[[
-        "rank_top100", "title", "year", "cinescore", "imdb_rating", "rotten_tomatoes_pct",
-        "metacritic_score", "letterboxd_rating", "director", "oscar_wins", "box_office_million"
-    ]].rename(columns={
-        "rank_top100": "Rank #", "title": "Title", "year": "Year", "cinescore": "CineScore",
-        "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅", "metacritic_score": "Meta Ⓜ️",
-        "letterboxd_rating": "Letterboxd", "director": "Director", "oscar_wins": "Oscars", "box_office_million": "Box Office ($M)"
-    }), use_container_width=True, hide_index=True)
+    m_view = st.radio("Display Mode:", ["🃏 Visual Cinema Cards", "📋 Spreadsheet Table"], horizontal=True, key="view_m100")
+    if m_view == "🃏 Visual Cinema Cards":
+        for idx, m in enumerate(MASTER_MOVIES_DB, 1):
+            render_media_card(m, idx)
+    else:
+        df_movies = pd.DataFrame(MASTER_MOVIES_DB)
+        st.dataframe(df_movies[[
+            "rank_top100", "title", "year", "cinescore", "imdb_rating", "rotten_tomatoes_pct",
+            "metacritic_score", "letterboxd_rating", "director", "oscar_wins", "box_office_million"
+        ]].rename(columns={
+            "rank_top100": "Rank #", "title": "Title", "year": "Year", "cinescore": "CineScore",
+            "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅", "metacritic_score": "Meta Ⓜ️",
+            "letterboxd_rating": "Letterboxd", "director": "Director", "oscar_wins": "Oscars", "box_office_million": "Box Office ($M)"
+        }), use_container_width=True, hide_index=True)
 
 # ----------------- TAB 3: Top 100 Series -----------------
 with tabs[2]:
     st.markdown("### 📺 Top 100 Television Series & Peak Rated Episodes")
-    df_series = pd.DataFrame(MASTER_SERIES_DB)
-    df_series["creators_str"] = df_series["creators"].apply(lambda c: ", ".join(c) if isinstance(c, list) else str(c))
-    st.dataframe(df_series[[
-        "rank_top100", "title", "start_year", "end_year", "cinescore", "imdb_rating", "rotten_tomatoes_pct",
-        "metacritic_score", "seasons_count", "episodes_count", "creators_str", "top_episode"
-    ]].rename(columns={
-        "rank_top100": "Rank #", "title": "Series Title", "start_year": "Start", "end_year": "End",
-        "cinescore": "CineScore", "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅",
-        "metacritic_score": "Meta Ⓜ️", "seasons_count": "Seasons", "episodes_count": "Episodes",
-        "creators_str": "Creators", "top_episode": "Highest Rated Episode"
-    }), use_container_width=True, hide_index=True)
+    s_view = st.radio("Display Mode:", ["🃏 Visual Series Cards", "📋 Spreadsheet Table"], horizontal=True, key="view_s100")
+    if s_view == "🃏 Visual Series Cards":
+        for idx, s in enumerate(MASTER_SERIES_DB, 1):
+            render_media_card(s, idx)
+    else:
+        df_series = pd.DataFrame(MASTER_SERIES_DB)
+        df_series["creators_str"] = df_series["creators"].apply(lambda c: ", ".join(c) if isinstance(c, list) else str(c))
+        st.dataframe(df_series[[
+            "rank_top100", "title", "start_year", "end_year", "cinescore", "imdb_rating", "rotten_tomatoes_pct",
+            "metacritic_score", "seasons_count", "episodes_count", "creators_str", "top_episode"
+        ]].rename(columns={
+            "rank_top100": "Rank #", "title": "Series Title", "start_year": "Start", "end_year": "End",
+            "cinescore": "CineScore", "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅",
+            "metacritic_score": "Meta Ⓜ️", "seasons_count": "Seasons", "episodes_count": "Episodes",
+            "creators_str": "Creators", "top_episode": "Highest Rated Episode"
+        }), use_container_width=True, hide_index=True)
 
 # ----------------- TAB 4: Anime Universe -----------------
 with tabs[3]:
     st.markdown("### 🎌 Anime Universe — Top 100 Series & Masterpiece Anime Movies")
-    an_sub1, an_sub2 = st.tabs(["📺 Top Anime Series (with MyAnimeList Scores)", "🎬 Top Anime Feature Films"])
+    an_sub1, an_sub2 = st.tabs(["📺 Top Anime Series (with MAL Scores)", "🎬 Top Anime Feature Films"])
     with an_sub1:
-        df_anime = pd.DataFrame(MASTER_ANIME_DB)
-        st.dataframe(df_anime[[
-            "rank_top100", "title", "japanese_title", "year", "cinescore", "mal_score", "imdb_rating",
-            "episodes_count", "studio", "top_episode"
-        ]].rename(columns={
-            "rank_top100": "Rank #", "title": "Anime Title", "japanese_title": "Original Title",
-            "year": "Year", "cinescore": "CineScore", "mal_score": "MyAnimeList ⭐", "imdb_rating": "IMDb ⭐",
-            "episodes_count": "Episodes", "studio": "Studio", "top_episode": "Peak Episode"
-        }), use_container_width=True, hide_index=True)
+        an_s_view = st.radio("Display Mode:", ["🃏 Visual Anime Cards", "📋 Spreadsheet Table"], horizontal=True, key="view_an_s")
+        if an_s_view == "🃏 Visual Anime Cards":
+            for idx, a in enumerate(MASTER_ANIME_DB, 1):
+                render_media_card(a, idx)
+        else:
+            df_anime = pd.DataFrame(MASTER_ANIME_DB)
+            st.dataframe(df_anime[[
+                "rank_top100", "title", "japanese_title", "year", "cinescore", "mal_score", "imdb_rating",
+                "episodes_count", "studio", "top_episode"
+            ]].rename(columns={
+                "rank_top100": "Rank #", "title": "Anime Title", "japanese_title": "Original Title",
+                "year": "Year", "cinescore": "CineScore", "mal_score": "MyAnimeList ⭐", "imdb_rating": "IMDb ⭐",
+                "episodes_count": "Episodes", "studio": "Studio", "top_episode": "Peak Episode"
+            }), use_container_width=True, hide_index=True)
     with an_sub2:
-        df_an_movies = pd.DataFrame(RAW_TOP_ANIME_MOVIES)
-        st.dataframe(df_an_movies[["title", "year", "director", "studio", "mal_score", "imdb_rating", "rotten_tomatoes_pct", "box_office_million"]].rename(columns={
-            "title": "Anime Film", "year": "Year", "director": "Director", "studio": "Studio",
-            "mal_score": "MAL Score", "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅", "box_office_million": "Box Office ($M)"
-        }), use_container_width=True, hide_index=True)
+        an_m_view = st.radio("Display Mode:", ["🃏 Visual Anime Movie Cards", "📋 Spreadsheet Table"], horizontal=True, key="view_an_m")
+        if an_m_view == "🃏 Visual Anime Movie Cards":
+            for idx, m in enumerate(FORMATTED_ANIME_MOVIES, 1):
+                render_media_card(m, idx)
+        else:
+            df_an_movies = pd.DataFrame(RAW_TOP_ANIME_MOVIES)
+            st.dataframe(df_an_movies[["title", "year", "director", "studio", "mal_score", "imdb_rating", "rotten_tomatoes_pct", "box_office_million"]].rename(columns={
+                "title": "Anime Film", "year": "Year", "director": "Director", "studio": "Studio",
+                "mal_score": "MAL Score", "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅", "box_office_million": "Box Office ($M)"
+            }), use_container_width=True, hide_index=True)
 
 # ----------------- TAB 5: Cartoons & Animation -----------------
 with tabs[4]:
     st.markdown("### 🎨 Cartoons & Western Animation — Top Series & Feature Films")
     c_sub1, c_sub2 = st.tabs(["📺 Top 100 Cartoon Series", "🎬 Top 100 Animated Feature Films"])
     with c_sub1:
-        df_cartoons = pd.DataFrame(MASTER_CARTOONS_DB)
-        df_cartoons["creators_str"] = df_cartoons["creators"].apply(lambda c: ", ".join(c) if isinstance(c, list) else str(c))
-        st.dataframe(df_cartoons[[
-            "rank_top100", "title", "year", "cinescore", "imdb_rating", "rotten_tomatoes_pct",
-            "seasons_count", "episodes_count", "creators_str", "top_episode"
-        ]].rename(columns={
-            "rank_top100": "Rank #", "title": "Cartoon Series", "year": "Year", "cinescore": "CineScore",
-            "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅", "seasons_count": "Seasons",
-            "episodes_count": "Episodes", "creators_str": "Creators", "top_episode": "Peak Episode"
-        }), use_container_width=True, hide_index=True)
+        c_s_view = st.radio("Display Mode:", ["🃏 Visual Cartoon Cards", "📋 Spreadsheet Table"], horizontal=True, key="view_c_s")
+        if c_s_view == "🃏 Visual Cartoon Cards":
+            for idx, c in enumerate(MASTER_CARTOONS_DB, 1):
+                render_media_card(c, idx)
+        else:
+            df_cartoons = pd.DataFrame(MASTER_CARTOONS_DB)
+            df_cartoons["creators_str"] = df_cartoons["creators"].apply(lambda c: ", ".join(c) if isinstance(c, list) else str(c))
+            st.dataframe(df_cartoons[[
+                "rank_top100", "title", "year", "cinescore", "imdb_rating", "rotten_tomatoes_pct",
+                "seasons_count", "episodes_count", "creators_str", "top_episode"
+            ]].rename(columns={
+                "rank_top100": "Rank #", "title": "Cartoon Series", "year": "Year", "cinescore": "CineScore",
+                "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅", "seasons_count": "Seasons",
+                "episodes_count": "Episodes", "creators_str": "Creators", "top_episode": "Peak Episode"
+            }), use_container_width=True, hide_index=True)
     with c_sub2:
-        df_an_feat = pd.DataFrame(RAW_TOP_ANIMATED_MOVIES)
-        st.dataframe(df_an_feat[["title", "year", "studio", "director", "imdb_rating", "rotten_tomatoes_pct", "box_office_million", "oscar_wins"]].rename(columns={
-            "title": "Animated Film", "year": "Year", "studio": "Studio", "director": "Director",
-            "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅", "box_office_million": "Box Office ($M)", "oscar_wins": "Oscars"
-        }), use_container_width=True, hide_index=True)
+        c_m_view = st.radio("Display Mode:", ["🃏 Visual Animated Movie Cards", "📋 Spreadsheet Table"], horizontal=True, key="view_c_m")
+        if c_m_view == "🃏 Visual Animated Movie Cards":
+            for idx, m in enumerate(FORMATTED_ANIMATED_MOVIES, 1):
+                render_media_card(m, idx)
+        else:
+            df_an_feat = pd.DataFrame(RAW_TOP_ANIMATED_MOVIES)
+            st.dataframe(df_an_feat[["title", "year", "studio", "director", "imdb_rating", "rotten_tomatoes_pct", "box_office_million", "oscar_wins"]].rename(columns={
+                "title": "Animated Film", "year": "Year", "studio": "Studio", "director": "Director",
+                "imdb_rating": "IMDb ⭐", "rotten_tomatoes_pct": "RT 🍅", "box_office_million": "Box Office ($M)", "oscar_wins": "Oscars"
+            }), use_container_width=True, hide_index=True)
 
 # ----------------- TAB 6: Hall of Fame Episodes -----------------
 with tabs[5]:
     st.markdown("### 🏆 Hall of Fame — The Highest-Rated TV, Anime & Cartoon Episodes in History (9.8 - 10.0 ⭐)")
     st.markdown("Episodes that achieved legendary critical consensus and near-perfect IMDb ratings.")
-
-    df_hof = pd.DataFrame(HALL_OF_FAME_EPISODES)
-    st.dataframe(df_hof[[
-        "series_title", "episode_title", "category", "season", "episode_number", "imdb_rating", "imdb_votes", "plot"
-    ]].rename(columns={
-        "series_title": "Show / Franchise", "episode_title": "Legendary Episode Title", "category": "Format",
-        "season": "Season", "episode_number": "Episode #", "imdb_rating": "IMDb Score ⭐",
-        "imdb_votes": "Votes", "plot": "Episode Synopsis"
-    }), use_container_width=True, hide_index=True)
+    hof_view = st.radio("Display Mode:", ["🃏 Visual Episode Masterpiece Cards", "📋 Spreadsheet Table"], horizontal=True, key="view_hof")
+    if hof_view == "🃏 Visual Episode Masterpiece Cards":
+        for idx, ep in enumerate(HALL_OF_FAME_EPISODES, 1):
+            render_media_card(ep, idx)
+    else:
+        df_hof = pd.DataFrame(HALL_OF_FAME_EPISODES)
+        st.dataframe(df_hof[[
+            "series_title", "episode_title", "category", "season", "episode_number", "imdb_rating", "imdb_votes", "plot"
+        ]].rename(columns={
+            "series_title": "Show / Franchise", "episode_title": "Legendary Episode Title", "category": "Format",
+            "season": "Season", "episode_number": "Episode #", "imdb_rating": "IMDb Score ⭐",
+            "imdb_votes": "Votes", "plot": "Episode Synopsis"
+        }), use_container_width=True, hide_index=True)
 
 # ----------------- TAB 7: Custom Bulk Sorter -----------------
 with tabs[6]:
