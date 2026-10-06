@@ -8,6 +8,7 @@ Top Animated Movies, and All-Time Hall of Fame Legendary Episodes.
 import datetime
 import pandas as pd
 import numpy as np
+import streamlit as st
 try:
     from streamlit_autorefresh import st_autorefresh
 except ImportError:
