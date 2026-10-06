@@ -365,34 +365,26 @@ def render_media_card(item: dict, rank: int):
     if "top_episode" in item:
         top_ep_info = f"<div style='font-size:0.85rem; color:#facc15; margin-top:0.4rem;'>👑 <b>Highest Rated Episode:</b> {item['top_episode']}</div>"
 
-    card_html = f"""
-    <div class="movie-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-            <div>
-                <span style="color:#94a3b8; font-weight:700; font-size:1.05rem; margin-right:8px;">#{rank}</span>
-                <span class="category-badge {badge_class}">{badge_text}</span>
-                <span style="font-size:1.35rem; font-weight:800; color:#f8fafc;">{title}</span>
-                <span style="color:#94a3b8; font-size:0.95rem; margin-left:6px;">{year_str}</span>
-            </div>
-            <div>
-                <span class="cinescore-pill">CineScore: {cinescore}</span>
-            </div>
-        </div>
-        <div style="margin-bottom:0.6rem;">
-            {badges_html}
-        </div>
-        <p style="font-size:0.9rem; color:#cbd5e1; margin:0.4rem 0;">{plot}</p>
-        {top_ep_info}
-        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; color:#94a3b8; margin-top:0.5rem; border-top:1px solid rgba(148,163,184,0.15); padding-top:0.5rem;">
-            <div>
-                <b>Director / Studio / Creators:</b> {director}
-            </div>
-            <div>
-                {stream_tags}
-            </div>
-        </div>
-    </div>
-    """
+    card_html = (
+        f'<div class="movie-card">'
+        f'<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">'
+        f'<div>'
+        f'<span style="color:#94a3b8; font-weight:700; font-size:1.05rem; margin-right:8px;">#{rank}</span>'
+        f'<span class="category-badge {badge_class}">{badge_text}</span>'
+        f'<span style="font-size:1.35rem; font-weight:800; color:#f8fafc;">{title}</span>'
+        f'<span style="color:#94a3b8; font-size:0.95rem; margin-left:6px;">{year_str}</span>'
+        f'</div>'
+        f'<div><span class="cinescore-pill">CineScore: {cinescore}</span></div>'
+        f'</div>'
+        f'<div style="margin-bottom:0.6rem;">{badges_html}</div>'
+        f'<p style="font-size:0.9rem; color:#cbd5e1; margin:0.4rem 0;">{plot}</p>'
+        f'{top_ep_info}'
+        f'<div style="display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; color:#94a3b8; margin-top:0.5rem; border-top:1px solid rgba(148,163,184,0.15); padding-top:0.5rem;">'
+        f'<div><b>Director / Studio / Creators:</b> {director}</div>'
+        f'<div>{stream_tags}</div>'
+        f'</div>'
+        f'</div>'
+    )
     st.markdown(card_html, unsafe_allow_html=True)
 
 
