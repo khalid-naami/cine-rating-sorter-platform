@@ -8,8 +8,11 @@ Top Animated Movies, and All-Time Hall of Fame Legendary Episodes.
 import datetime
 import pandas as pd
 import numpy as np
-import streamlit as st
-from streamlit_autorefresh import st_autorefresh
+try:
+    from streamlit_autorefresh import st_autorefresh
+except ImportError:
+    def st_autorefresh(*args, **kwargs):
+        return 0
 
 from src.movies_database import MASTER_MOVIES_DB
 from src.series_database import MASTER_SERIES_DB, TOP_SERIES_EPISODES
