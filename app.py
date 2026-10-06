@@ -21,6 +21,7 @@ from src.anime_database import MASTER_ANIME_DB, RAW_TOP_ANIME_MOVIES, TOP_ANIME_
 from src.cartoons_database import MASTER_CARTOONS_DB, RAW_TOP_ANIMATED_MOVIES, TOP_CARTOON_EPISODES
 from src.master_catalog import MasterCatalog, FORMATTED_ANIME_MOVIES, FORMATTED_ANIMATED_MOVIES, HALL_OF_FAME_EPISODES
 from src.rating_sorter_engine import RatingSorterEngine
+from src.posters_data import get_media_poster
 from src.visualizer import (
     create_ratings_scatter_plot,
     create_cinescore_distribution_bar
